@@ -18,31 +18,34 @@ class SigninScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SigninBloc, BaseState>(
-      builder: (context, state) {
-        return Scaffold(
-          body: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Center(
-                child: Text(
-                  'Signin Screen',
-                  style: TextStyle(
-                    fontSize: 30,
+    return BlocProvider<SigninBloc>(
+      create: (context) => SigninBloc(context.bloc<AuthenticationBloc>()),
+      child: BlocBuilder<SigninBloc, BaseState>(
+        builder: (context, state) {
+          return Scaffold(
+            body: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Center(
+                  child: Text(
+                    'Signin Screen',
+                    style: TextStyle(
+                      fontSize: 30,
+                    ),
                   ),
                 ),
-              ),
-              RaisedButton(
-                onPressed: () => context
-                    .bloc<SigninBloc>()
-                    .add(UpdateEvent(data: nextSreen)),
-                child: Text('Signin and continue to next page'),
-                color: Colors.blue,
-              ),
-            ],
-          ),
-        );
-      },
+                RaisedButton(
+                  onPressed: () => context
+                      .bloc<SigninBloc>()
+                      .add(UpdateEvent(data: nextSreen)),
+                  child: Text('Signin and continue to next page'),
+                  color: Colors.blue,
+                ),
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 }

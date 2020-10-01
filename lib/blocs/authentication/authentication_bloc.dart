@@ -7,19 +7,7 @@ part 'authentication_event.dart';
 part 'authentication_state.dart';
 
 class AuthenticationBloc extends Bloc<BaseEvent, BaseState> {
-  final SigninBloc signInBloc;
-  StreamSubscription _signInBlocSubscription;
-
-  AuthenticationBloc(this.signInBloc) : super(InitializedState()) {
-    void _onSignInStateChange(BaseState state) {
-      if (state is AuthenticatedState) {
-        add(UpdateEvent(timestamp: DateTime.now(), data: state.data));
-      }
-    }
-
-    _onSignInStateChange(signInBloc.state);
-    _signInBlocSubscription = signInBloc.listen(_onSignInStateChange);
-  }
+  AuthenticationBloc() : super(InitializedState());
 
   @override
   Stream<BaseState> mapEventToState(
@@ -41,11 +29,5 @@ class AuthenticationBloc extends Bloc<BaseEvent, BaseState> {
 
   Stream<BaseState> _mapUpdateEventToState(data) async* {
     yield AuthenticatedState(data: data);
-  }
-
-  @override
-  Future<void> close() {
-    _signInBlocSubscription.cancel();
-    return super.close();
   }
 }

@@ -10,11 +10,7 @@ class App extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => SigninBloc(),
-        ),
-        BlocProvider(
-          create: (context) => AuthenticationBloc(context.bloc<SigninBloc>())
-            ..add(InitializeEvent()),
+          create: (context) => AuthenticationBloc()..add(InitializeEvent()),
         ),
         BlocProvider(
           create: (context) => LandingBloc(),

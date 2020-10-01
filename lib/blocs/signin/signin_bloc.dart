@@ -4,14 +4,16 @@ import 'package:bloc/bloc.dart';
 import 'package:passing_bloc_multiblocprovider_poc/blocs/blocs.dart';
 
 class SigninBloc extends Bloc<BaseEvent, BaseState> {
-  SigninBloc() : super(InitializedState());
+  final AuthenticationBloc _authenticationBloc;
+
+  SigninBloc(this._authenticationBloc) : super(InitializedState());
 
   @override
   Stream<BaseState> mapEventToState(
     BaseEvent event,
   ) async* {
     if (event is UpdateEvent) {
-      yield AuthenticatedState(data: event.data);
+      _authenticationBloc.add(UpdateEvent(data: event.data));
     }
   }
 }
